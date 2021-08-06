@@ -9,7 +9,8 @@ The following features are available :
 5) Securely erase files
 6) Deleting system log
 
-Requires root access to run the program
+Requires root access to run the script.
+
 Testing was done on Debian, Ubuntu, Termux, but if you find any bugs we would be very grateful if you let us know at greyhatfeedback@protonmail.com
 
 CAUTION!!!
