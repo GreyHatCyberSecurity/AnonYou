@@ -11,3 +11,6 @@ The following features are available :
 
 Requires root access to run the program
 Testing was done on Debian, Ubuntu, Termux, but if you find any bugs we would be very grateful if you let us know at greyhatfeedback@protonmail.com
+
+CAUTION!!!
+The utility has been created to ease the processes related to your anonymization, but the author of the script is not responsible for any damage caused by the script or its use.
