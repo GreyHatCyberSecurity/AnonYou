@@ -43,7 +43,7 @@ checkroot() {
 
 installreq() {
 	echo "Can I install depencies?(y/n)"
-	read -p -r $'\e[1;31m>>>\e[0m ' caninstall
+	read -p -r $"\e[1;31m>>>\e[0m " caninstall
 	case $caninstall in
 		y)
 		dinstall=1
@@ -177,7 +177,7 @@ main() {
 	echo "[7] User Guide"
 	sleep 0.01
 	echo "[8] Exit"
-	read -p -r $'\e[1;31m>>>\e[0m ' main_choise
+	read -p -r $"\e[1;31m>>>\e[0m " main_choise
 	case $main_choise in
 		1)
 		if [ $macchangerinstalled -eq "1" ];then
@@ -249,16 +249,16 @@ spoofer() {
         printf "$iface\n" > /dev/null 2>&1
         array_test+=("$iface")
 	done
-	echo -e "Available interfaces : ${BlueF}${array_test[@]}${end}"
+	echo -e "Available interfaces : ${BlueF}" "${array_test[@]}" "${end}"
 	echo "------------------------------------------------------------------------------------------"
 	echo ""
-	cur_interface=$(ip route show default | awk '/default/ {print $5}')
-	cur_mac=$(ifconfig $cur_interface | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+	cur_interface=$(ip route show default | awk "/default/ {print $5}")
+	cur_mac=$(ifconfig $cur_interface | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 	echo "Changing the MAC-address for your current interface : $cur_interface($cur_mac)"
 	echo ""
 	echo "If it's right, just press [ENTER] to perform actions"
 	echo "If it's not right - please, enter the name of your interface below"
-	read -p -r $'\e[1;31m>>>\e[0m ' int
+	read -p -r $"\e[1;31m>>>\e[0m " int
 	case $int in
 		"")
 		inter=$cur_interface
@@ -272,7 +272,7 @@ spoofer() {
 	echo "------------------------------------------------------------------------------------------"
 	echo "1. Make random MAC address"
 	echo "2. Make specified MAC address"
-	read -p -r $'\e[1;31m>>>\e[0m ' whichmac
+	read -p -r $"\e[1;31m>>>\e[0m " whichmac
 	case $whichmac in
 	1) 
 		echo "Performing actions, please wait.."
@@ -281,7 +281,7 @@ spoofer() {
 		macchanger -r $inter > /dev/null 2>&1
 		ifconfig $inter up > /dev/null 2>&1
 		macchanger -s $inter > /dev/null 2>&1
-		newmac=$(ifconfig $inter | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+		newmac=$(ifconfig $inter | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
@@ -291,13 +291,13 @@ spoofer() {
 	2)
 		clear
 		echo "Input new MAC address in the next format : 1a:2b:3c:4d:5e:6f"
-		read -p -r $'\e[1;31m>>>\e[0m ' custommac
+		read -p -r $"\e[1;31m>>>\e[0m " custommac
 		echo "Performing actions, please wait..."
 		ifconfig $inter down > /dev/null 2>&1
 		macchanger -m $custommac $inter > /dev/null 2>&1
 		ifconfig $inter up > /dev/null 2>&1
 		macchanger -s $inter > /dev/null 2>&1
-		newmac=$(ifconfig $inter | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+		newmac=$(ifconfig $inter | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
@@ -320,7 +320,7 @@ swapclean() {
 	echo "2. Wipe secure(slow)"
 	echo "3. I've changed my mind, go to main menu!"
 	echo "4. Exit"
-	read -p -r $'\e[1;31m>>>\e[0m ' how2wipeswap
+	read -p -r $"\e[1;31m>>>\e[0m " how2wipeswap
 	case $how2wipeswap in
 		1)
 		echo "Unmounting swap devices"
@@ -335,7 +335,7 @@ swapclean() {
 		2)
 		swapon -s
 		echo "Enter your swap device manually(example : /dev/dm-2)"
-		read -p -r $'\e[1;31m>>>\e[0m ' swapdev
+		read -p -r $"\e[1;31m>>>\e[0m " swapdev
 		echo "Device : $swapdev selected, unmounting.."
 		swapoff -a
 		echo "Wiping $swapdev, process may be very slow"
@@ -371,7 +371,7 @@ userguide() {
 	echo "5. What is swap space wiping?"
 	echo "6. What is shreder?"
 	echo "7. Go back to menu"
-	read -p -r $'\e[1;31m>>>\e[0m ' usg
+	read -p -r $"\e[1;31m>>>\e[0m " usg
 	case $usg in
 		1)
 		echo "TOR (The onion router) is a special network of hundreds of computers around the world to anonymize your traffic"
@@ -458,11 +458,11 @@ shreder() {
 	banner
 	echo "1. I want to remove all from directory"
 	echo "2. I want to remove single file"
-	read -p -r $'\e[1;31m>>>\e[0m ' shredopt
+	read -p -r $"\e[1;31m>>>\e[0m " shredopt
 	case $shredopt in
 		1)
 		echo "Enter or Drag'n'Drop directory path to shred"
-		read -p -r $'\e[1;31m>>>\e[0m ' directory
+		read -p -r $"\e[1;31m>>>\e[0m " directory
 		dir2shred=$directory*
 		echo "Shredding all from directory $directory, please wait"
 		shred -v -f -n 30 -z $dir2shred
@@ -472,7 +472,7 @@ shreder() {
 		;;
 		2)
 		echo "Drag'n'Drop or enter your file to shred"
-		read -p -r $'\e[1;31m>>>\e[0m ' file2shred
+		read -p -r $"\e[1;31m>>>\e[0m " file2shred
 		echo "Shredding your file ($file2shred). Please wait.."
 		shred -v -f -n 30 -z $file2shred
 		echo "Done! Press [ENTER] to return to main menu!"
@@ -498,7 +498,7 @@ wipemem() {
 	echo "2. Wipe my RAM fast(non-secure)"
 	echo "3. Do nothing, I've changed my mind. Go to main menu"
 	echo "4. Exit"
-	read -p -r $'\e[1;31m>>>\e[0m ' how2wipemem
+	read -p -r $"\e[1;31m>>>\e[0m " how2wipemem
 	case $how2wipemem in
 		1)
 		wiperamsec
@@ -567,9 +567,11 @@ torbridges() {
 		main
 	else
 		echo "Configuring Privoxy, please wait.."
-		echo "forward-socks5 / localhost:9050 ." >> /etc/privoxy/config
-		echo "forward-socks4 / localhost:9050 ." >> /etc/privoxy/config
-		echo "forward-socks4a / localhost:9050 ." >> /etc/privoxy/config
+        {
+            echo "forward-socks5 / localhost:9050 ."
+            echo "forward-socks4 / localhost:9050 ."
+            echo "forward-socks4a / localhost:9050 ."
+        } >> /etc/privoxy/config
 		echo "Starting tor service"
 		service tor start
 		echo "Done..."
@@ -593,7 +595,7 @@ remrsyslog() {
 		echo "Are you sure that you want to remove rsyslog?"
 		echo "In case your system may be hacked, you couldn't check the logs"
 		echo "Enter : 'YES REMOVE RSYSLOG' to continue or 'back' to return to main menu"
-		read -p -r $'\e[1;31m>>>\e[0m ' removeornot
+		read -p -r $"\e[1;31m>>>\e[0m " removeornot
 		case $removeornot in
 			"YES REMOVE RSYSLOG")
 				echo "Removing rsyslog, please wait"
