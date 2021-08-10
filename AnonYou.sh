@@ -246,7 +246,7 @@ spoofer() {
 	array_test=()
 	for iface in $(ifconfig | cut -d ' ' -f1| tr ':' '\n' | awk NF)
 	do
-        printf "$iface\n" > /dev/null 2>&1
+        printf "%s\n" "$iface" > /dev/null 2>&1
         array_test+=("$iface")
 	done
 	echo -e "Available interfaces : ${BlueF}" "${array_test[@]}" "${end}"
