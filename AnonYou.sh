@@ -253,7 +253,7 @@ spoofer() {
 	echo "------------------------------------------------------------------------------------------"
 	echo ""
 	cur_interface=$(ip route show default | awk "/default/ {print $5}")
-	cur_mac=$(ifconfig $cur_interface | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
+	cur_mac=$(ifconfig "$cur_interface" | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 	echo "Changing the MAC-address for your current interface : $cur_interface($cur_mac)"
 	echo ""
 	echo "If it's right, just press [ENTER] to perform actions"
@@ -276,12 +276,12 @@ spoofer() {
 	case $whichmac in
 	1) 
 		echo "Performing actions, please wait.."
-		macchanger -s $inter > /dev/null 2>&1
-		ifconfig $inter down > /dev/null 2>&1
-		macchanger -r $inter > /dev/null 2>&1
-		ifconfig $inter up > /dev/null 2>&1
-		macchanger -s $inter > /dev/null 2>&1
-		newmac=$(ifconfig $inter | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
+		macchanger -s "$inter" > /dev/null 2>&1
+		ifconfig "$inter" down > /dev/null 2>&1
+		macchanger -r "$inter" > /dev/null 2>&1
+		ifconfig "$inter" up > /dev/null 2>&1
+		macchanger -s "$inter" > /dev/null 2>&1
+		newmac=$(ifconfig "$inter" | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
@@ -293,11 +293,11 @@ spoofer() {
 		echo "Input new MAC address in the next format : 1a:2b:3c:4d:5e:6f"
 		read -p -r $"\e[1;31m>>>\e[0m " custommac
 		echo "Performing actions, please wait..."
-		ifconfig $inter down > /dev/null 2>&1
-		macchanger -m $custommac $inter > /dev/null 2>&1
-		ifconfig $inter up > /dev/null 2>&1
-		macchanger -s $inter > /dev/null 2>&1
-		newmac=$(ifconfig $inter | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
+		ifconfig "$inter" down > /dev/null 2>&1
+		macchanger -m "$custommac" "$inter" > /dev/null 2>&1
+		ifconfig "$inter" up > /dev/null 2>&1
+		macchanger -s "$inter" > /dev/null 2>&1
+		newmac=$(ifconfig "$inter" | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
@@ -307,7 +307,7 @@ spoofer() {
 	*)
 		echo "Error input, repeating.."
 		sleep 1
-		spoofer
+		spoofer "$@"
 		;;
 	esac
 }
@@ -339,7 +339,7 @@ swapclean() {
 		echo "Device : $swapdev selected, unmounting.."
 		swapoff -a
 		echo "Wiping $swapdev, process may be very slow"
-		sswap -v $swapdev
+		sswap -v "$swapdev"
 		echo "Device $swapdev succesfully wiped, mounting it back.."
 		swapon -a
 		echo "Done! Press [ENTER] to return to main menu!"
@@ -463,9 +463,9 @@ shreder() {
 		1)
 		echo "Enter or Drag'n'Drop directory path to shred"
 		read -p -r $"\e[1;31m>>>\e[0m " directory
-		dir2shred=$directory*
+		#dir2shred=$directory*
 		echo "Shredding all from directory $directory, please wait"
-		shred -v -f -n 30 -z $dir2shred
+		shred -v -f -n 30 -z "$file2shred"
 		echo "Done! Press [ENTER] to return to main menu!"
 		read -r _
 		main
@@ -474,7 +474,7 @@ shreder() {
 		echo "Drag'n'Drop or enter your file to shred"
 		read -p -r $"\e[1;31m>>>\e[0m " file2shred
 		echo "Shredding your file ($file2shred). Please wait.."
-		shred -v -f -n 30 -z $file2shred
+		shred -v -f -n 30 -z "$file2shred"
 		echo "Done! Press [ENTER] to return to main menu!"
 		read -r _
 		main
