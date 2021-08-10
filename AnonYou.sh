@@ -4,6 +4,7 @@
 #Colors
 #=======================================
 greenf="\033[1;32m"
+yellow="\033[33m"
 BlueF='\e[1;34m'
 end="\033[0m"
 red='\e[1;31m'
@@ -63,7 +64,7 @@ torcheck() {
 		echo -e "${end}Tor......................[ ${greenf}Found${end} ]"
 		torinstalled=1
 	elif [ "$?" -ne "0" ];then
-		echo -e "Tor...........................[ ${orange}Not found${end} ]"
+		echo -e "Tor...........................[ ${yellow}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing Tor...."
 			sudo apt-get install tor -y > /dev/null 2>&1
@@ -72,7 +73,7 @@ torcheck() {
 				echo -e "${greenf}Succesfully installed Tor${end}"
 				torinstalled=1
 			else
-				echo -e "${orange}Something went wrong while tor installation...Please, restart the program and try again!${end}"
+				echo -e "${yellow}Something went wrong while tor installation...Please, restart the program and try again!${end}"
 				torinstalled=0
 			fi
 		fi
@@ -88,7 +89,7 @@ sdmemcheck() {
 		echo -e "${end}sdmem......................[ ${greenf}Found${end} ]"
 		sdmeminstalled=1
 	elif [ "$?" -ne "0" ];then
-		echo -e "sdmem...........................[ ${orange}Not found${end} ]"
+		echo -e "sdmem...........................[ ${yellow}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing secure-delete...."
 			sudo apt-get install secure-delete -y > /dev/null 2>&1
@@ -97,7 +98,7 @@ sdmemcheck() {
 				echo -e "${greenf}Succesfully installed sdmem${end}"
 				sdmeminstalled=1
 			else
-				echo -e "${orange}Something went wrong while sdmem installation...Please, restart the program and try again!${end}"
+				echo -e "${yellow}Something went wrong while sdmem installation...Please, restart the program and try again!${end}"
 				sdmeminstalled=0
 			fi
 		fi
@@ -113,7 +114,7 @@ mac_c_check() {
 		echo -e "${end}macchanger......................[ ${greenf}Found${end} ]"
 		macchangerinstalled=1
 	elif [ "$?" -ne "0" ];then
-		echo -e "macchanger...........................[ ${orange}Not found${end} ]"
+		echo -e "macchanger...........................[ ${yellow}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing macchanger...."
 			sudo apt-get install macchanger -y > /dev/null 2>&1
@@ -122,7 +123,7 @@ mac_c_check() {
 				echo -e "${greenf}Succesfully installed macchanger${end}"
 				macchangerinstalled=1
 			else
-				echo -e "${orange}Something went wrong while macchanger installation...Please, restart the program and try again!${end}"
+				echo -e "${yellow}Something went wrong while macchanger installation...Please, restart the program and try again!${end}"
 				macchangerinstalled=0
 			fi
 		fi
@@ -138,7 +139,7 @@ privoxycheck() {
 		echo -e "${end}Privoxy......................[ ${greenf}Found${end} ]"
 		privoxyinstalled=1
 	elif [ "$?" -ne "0" ];then
-		echo -e "Privoxy...........................[ ${orange}Not found${end} ]"
+		echo -e "Privoxy...........................[ ${yellow}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing Privoxy...."
 			sudo apt-get install privoxy -y > /dev/null 2>&1
@@ -147,7 +148,7 @@ privoxycheck() {
 				echo -e "${greenf}Succesfully installed Privoxy${end}"
 				privoxyinstalled=1
 			else
-				echo -e "${orange}Something went wrong while Privoxy installation...Please, restart the program and try again!${end}"
+				echo -e "${yellow}Something went wrong while Privoxy installation...Please, restart the program and try again!${end}"
 				privoxyinstalled=0
 			fi
 		fi
