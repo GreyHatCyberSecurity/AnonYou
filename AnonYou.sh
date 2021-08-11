@@ -36,14 +36,14 @@ checkroot() {
 		mac_c_check
 		sdmemcheck
 		echo "Press [ENTER] to go to main menu!"
-		read -r _
+		read -p _
 		main
 	fi
 }
 
 installreq() {
 	echo "Can I install depencies?(y/n)"
-	read -p -r $"\e[1;31m>>>\e[0m " caninstall
+	read -p $'\e[1;31m>>>\e[0m ' caninstall
 	case $caninstall in
 		y)
 		dinstall=1
@@ -177,7 +177,7 @@ main() {
 	echo "[7] User Guide"
 	sleep 0.01
 	echo "[8] Exit"
-	read -p -r $"\e[1;31m>>>\e[0m " main_choise
+	read -p $'\e[1;31m>>>\e[0m ' main_choise
 	case $main_choise in
 		1)
 		if [ $macchangerinstalled -eq "1" ];then
@@ -186,7 +186,7 @@ main() {
 			echo "Seems like you haven't macchanger.."
 			echo "Please, install macchanger and try again!"
 			echo "Press [ENTER] to return to main menu!"
-			read -r _
+			read -p _
 			main
 		fi
 		;;
@@ -197,7 +197,7 @@ main() {
 			echo "Seems like you haven't tor or privoxy.."
 			echo "Please, restart the script and install requiements!"
 			echo "Press [ENTER] to return to main menu!"
-			read -r _
+			read -p _
 			main
 		fi
 		;;
@@ -211,7 +211,7 @@ main() {
 			echo "Seems like you haven't secure-delete.."
 			echo "Please, install secure-delete and try again!"
 			echo "Press [ENTER] to return to main menu!"
-			read -r _
+			read -p _
 			main
 		fi
 		;;
@@ -222,7 +222,7 @@ main() {
 			echo "Seems like you haven't secure-delete.."
 			echo "Please, install secure-delete and try again!"
 			echo "Press [ENTER] to return to main menu!"
-			read -r _
+			read -p _
 			main
 		fi
 		;;
@@ -258,7 +258,7 @@ spoofer() {
 	echo ""
 	echo "If it's right, just press [ENTER] to perform actions"
 	echo "If it's not right - please, enter the name of your interface below"
-	read -p -r $"\e[1;31m>>>\e[0m " int
+	read -p $'\e[1;31m>>>\e[0m ' int
 	case $int in
 		"")
 		inter=$cur_interface
@@ -272,26 +272,26 @@ spoofer() {
 	echo "------------------------------------------------------------------------------------------"
 	echo "1. Make random MAC address"
 	echo "2. Make specified MAC address"
-	read -p -r $"\e[1;31m>>>\e[0m " whichmac
+	read -p $'\e[1;31m>>>\e[0m ' whichmac
 	case $whichmac in
 	1) 
 		echo "Performing actions, please wait.."
 		macchanger -s "$inter" > /dev/null 2>&1
 		ifconfig "$inter" down > /dev/null 2>&1
-		macchanger -r "$inter" > /dev/null 2>&1
+		macchanger -p "$inter" > /dev/null 2>&1
 		ifconfig "$inter" up > /dev/null 2>&1
 		macchanger -s "$inter" > /dev/null 2>&1
 		newmac=$(ifconfig "$inter" | grep -o -E "([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}")
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 	2)
 		clear
 		echo "Input new MAC address in the next format : 1a:2b:3c:4d:5e:6f"
-		read -p -r $"\e[1;31m>>>\e[0m " custommac
+		read -p $'\e[1;31m>>>\e[0m ' custommac
 		echo "Performing actions, please wait..."
 		ifconfig "$inter" down > /dev/null 2>&1
 		macchanger -m "$custommac" "$inter" > /dev/null 2>&1
@@ -301,7 +301,7 @@ spoofer() {
 		echo "Done!"
 		echo "Your new mac-address is $newmac"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 	*)
@@ -320,7 +320,7 @@ swapclean() {
 	echo "2. Wipe secure(slow)"
 	echo "3. I've changed my mind, go to main menu!"
 	echo "4. Exit"
-	read -p -r $"\e[1;31m>>>\e[0m " how2wipeswap
+	read -p $'\e[1;31m>>>\e[0m ' how2wipeswap
 	case $how2wipeswap in
 		1)
 		echo "Unmounting swap devices"
@@ -329,13 +329,13 @@ swapclean() {
 		swapon -a
 		echo "Done! Swap space cleared succesfully"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 		2)
 		swapon -s
 		echo "Enter your swap device manually(example : /dev/dm-2)"
-		read -p -r $"\e[1;31m>>>\e[0m " swapdev
+		read -p $'\e[1;31m>>>\e[0m ' swapdev
 		echo "Device : $swapdev selected, unmounting.."
 		swapoff -a
 		echo "Wiping $swapdev, process may be very slow"
@@ -343,7 +343,7 @@ swapclean() {
 		echo "Device $swapdev succesfully wiped, mounting it back.."
 		swapon -a
 		echo "Done! Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 		3)
@@ -371,7 +371,7 @@ userguide() {
 	echo "5. What is swap space wiping?"
 	echo "6. What is shreder?"
 	echo "7. Go back to menu"
-	read -p -r $"\e[1;31m>>>\e[0m " usg
+	read -p $'\e[1;31m>>>\e[0m ' usg
 	case $usg in
 		1)
 		echo "TOR (The onion router) is a special network of hundreds of computers around the world to anonymize your traffic"
@@ -380,7 +380,7 @@ userguide() {
 		echo "More information about Tor you can read on the official site of the developers"
 		echo "https://www.torproject.org/"
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		2)
@@ -391,7 +391,7 @@ userguide() {
 		echo "An example of such filtering is Wi-Fi. A person can enter in the router settings a list of his own MAC addresses, and only they will be able to connect to the network, and others will not"
 		echo "By changing the MAC address, you can bypass some of the 'hardware' blockages, as well as complicate the identification of your devices within the network"
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		3)
@@ -401,7 +401,7 @@ userguide() {
 		echo ""
 		echo "On the other hand, if you are an ordinary user, you will not need rsyslog very much, because it also takes a lot of space over time and contains information that can be read by intruders"
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		4)
@@ -413,7 +413,7 @@ userguide() {
 		echo ""
 		echo "Secure RAM cleanup offers a complete, but not a quick RAM cleanup, thus protecting such data from all possible compromise"
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		5)
@@ -423,7 +423,7 @@ userguide() {
 		echo "Such files can be read and restored"
 		echo "For this purpose, there is a special utility that can safely clear this space, making it impossible to read and restore data from it"
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		6)
@@ -439,7 +439,7 @@ userguide() {
 		echo ""
 		echo "It is worth mentioning that it is strongly not recommended to use this feature when cleaning a file from solid-state drives (SSDs), because SSDs have a different structure than HDDs, which can be irreparably damaged by such overwriting."
 		echo "Press [ENTER] to return back"
-		read -r _
+		read -p _
 		userguide
 		;;
 		7)
@@ -458,25 +458,25 @@ shreder() {
 	banner
 	echo "1. I want to remove all from directory"
 	echo "2. I want to remove single file"
-	read -p -r $"\e[1;31m>>>\e[0m " shredopt
+	read -p $'\e[1;31m>>>\e[0m ' shredopt
 	case $shredopt in
 		1)
 		echo "Enter or Drag'n'Drop directory path to shred"
-		read -p -r $"\e[1;31m>>>\e[0m " directory
+		read -p $'\e[1;31m>>>\e[0m ' directory
 		#dir2shred=$directory*
 		echo "Shredding all from directory $directory, please wait"
 		shred -v -f -n 30 -z "$file2shred"
 		echo "Done! Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 		2)
 		echo "Drag'n'Drop or enter your file to shred"
-		read -p -r $"\e[1;31m>>>\e[0m " file2shred
+		read -p $'\e[1;31m>>>\e[0m ' file2shred
 		echo "Shredding your file ($file2shred). Please wait.."
 		shred -v -f -n 30 -z "$file2shred"
 		echo "Done! Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 		;;
 		*)
@@ -498,7 +498,7 @@ wipemem() {
 	echo "2. Wipe my RAM fast(non-secure)"
 	echo "3. Do nothing, I've changed my mind. Go to main menu"
 	echo "4. Exit"
-	read -p -r $"\e[1;31m>>>\e[0m " how2wipemem
+	read -p $'\e[1;31m>>>\e[0m ' how2wipemem
 	case $how2wipemem in
 		1)
 		wiperamsec
@@ -563,7 +563,7 @@ torbridges() {
 		echo "SOCKS Proxy : localhost:9050"
 		echo "After adding proxy, you visit any site through TOR network!"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 	else
 		echo "Configuring Privoxy, please wait.."
@@ -584,7 +584,7 @@ torbridges() {
 		echo "SOCKS Proxy : localhost:9050"
 		echo "After adding proxy, you visit any site through TOR network!"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 	fi
 }
@@ -595,7 +595,7 @@ remrsyslog() {
 		echo "Are you sure that you want to remove rsyslog?"
 		echo "In case your system may be hacked, you couldn't check the logs"
 		echo "Enter : 'YES REMOVE RSYSLOG' to continue or 'back' to return to main menu"
-		read -p -r $"\e[1;31m>>>\e[0m " removeornot
+		read -p $'\e[1;31m>>>\e[0m ' removeornot
 		case $removeornot in
 			"YES REMOVE RSYSLOG")
 				echo "Removing rsyslog, please wait"
@@ -604,13 +604,13 @@ remrsyslog() {
 					if [ "$?" -eq "1" ]; then
 						echo "Done. rsyslog has been removed succesfully"
 						echo "Press [ENTER] to return to main menu!"
-						read -r _
+						read -p _
 						main
 					else
 						echo "Something went wrong while removing rsyslog"
 						echo "Please, try again"
 						echo "Press [ENTER] to return to main menu!"
-						read -r _
+						read -p _
 						main
 					fi
 				;;
@@ -626,7 +626,7 @@ remrsyslog() {
 	else
 		echo "No rsyslog detected, so not removed!"
 		echo "Press [ENTER] to return to main menu!"
-		read -r _
+		read -p _
 		main
 	fi
 
