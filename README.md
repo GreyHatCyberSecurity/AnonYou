@@ -1,5 +1,5 @@
+## Thank you for choosing the AnonYou utility.
 ## AnonYou is a free, open-source utility written in bash that allows you to quickly perform anonymization-related actions.
-> *Thank you for choosing the AnonYou utility.
 
 ### The following features are available :
 1. Changing the MAC address to random or arbitrary
