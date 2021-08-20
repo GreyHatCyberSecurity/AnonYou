@@ -230,6 +230,9 @@ main() {
 		7)
 		userguide
 		;;
+		8)
+		exit
+		;;
 		*)
 		echo "Error input, repeating.."
 		sleep 1
