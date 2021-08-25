@@ -65,7 +65,7 @@ torcheck() {
 		echo -e "Tor...........................[ ${orange}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing Tor...."
-			sudo apt-get install tor -y > /dev/null 2>&1
+			apt-get install tor -y > /dev/null 2>&1
 			which tor > /dev/null 2>&1
 			if [ "$?" -eq "0" ];then
 				echo -e "${greenf}Succesfully installed Tor${end}"
@@ -90,7 +90,7 @@ sdmemcheck() {
 		echo -e "sdmem...........................[ ${orange}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing secure-delete...."
-			sudo apt-get install secure-delete -y > /dev/null 2>&1
+			apt-get install secure-delete -y > /dev/null 2>&1
 			which sdmem > /dev/null 2>&1
 			if [ "$?" -eq "0" ];then
 				echo -e "${greenf}Succesfully installed sdmem${end}"
@@ -115,7 +115,7 @@ mac_c_check() {
 		echo -e "macchanger...........................[ ${orange}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing macchanger...."
-			sudo apt-get install macchanger -y > /dev/null 2>&1
+			apt-get install macchanger -y > /dev/null 2>&1
 			which macchanger > /dev/null 2>&1
 			if [ "$?" -eq "0" ];then
 				echo -e "${greenf}Succesfully installed macchanger${end}"
@@ -140,7 +140,7 @@ privoxycheck() {
 		echo -e "Privoxy...........................[ ${orange}Not found${end} ]"
 		if [ $dinstall -eq "1" ];then
 			echo -e "Installing Privoxy...."
-			sudo apt-get install privoxy -y > /dev/null 2>&1
+			apt-get install privoxy -y > /dev/null 2>&1
 			which privoxy > /dev/null 2>&1
 			if [ "$?" -eq "0" ];then
 				echo -e "${greenf}Succesfully installed Privoxy${end}"
@@ -170,7 +170,7 @@ main() {
 	sleep 0.01
 	echo "[5] Secure swap space wiping"
 	sleep 0.01
-	echo "[6] File shreder"
+	echo "[6] File shredder"
 	sleep 0.01
 	echo "[7] User Guide"
 	sleep 0.01
@@ -230,9 +230,9 @@ main() {
 		7)
 		userguide
 		;;
-		8)
-		exit
-		;;
+        8)
+        exit
+        ;;
 		*)
 		echo "Error input, repeating.."
 		sleep 1
@@ -243,6 +243,7 @@ main() {
 
 spoofer() {
 	clear
+	banner
 	echo "------------------------------------------------------------------------------------------"
 	array_test=()
 	for iface in $(ifconfig | cut -d ' ' -f1| tr ':' '\n' | awk NF)
@@ -371,7 +372,8 @@ userguide() {
 	echo "4. What is RAM wiping?"
 	echo "5. What is swap space wiping?"
 	echo "6. What is shreder?"
-	echo "7. Go back to menu"
+	echo "7. I have a problem/question/bug. How can I contact you?"
+	echo "8. Go back to menu"
 	read -p $'\e[1;31m>>>\e[0m ' usg
 	case $usg in
 		1)
@@ -444,6 +446,17 @@ userguide() {
 		userguide
 		;;
 		7)
+		echo "If you have any question about our software/you faced a bug or problem"
+		echo "Please, feel free to contact us at: "
+		echo "E-Mail : greyhatfeedback@protonmail.com"
+		echo "Telegram : @greyhatfdbot"
+		echo "We will be happy to help you solve your problem!"
+		echo ""
+		echo "Press [ENTER] to return to main menu!"
+		read asdiohasoidhas
+		main
+		;;
+		8)
 		main
 		;;
 		*)
@@ -520,30 +533,30 @@ wiperamsec() {
 	echo "Wiping your RAM hard, please wait"
 	echo "Try to not use your computer now"
 	sleep 5
-    echo "Dropping your caches.."
-    echo 1024 > /proc/sys/vm/min_free_kbytes
-    echo 3  > /proc/sys/vm/drop_caches
-    echo 1  > /proc/sys/vm/oom_kill_allocating_task
-    echo 1  > /proc/sys/vm/overcommit_memory
-    echo 0  > /proc/sys/vm/oom_dump_tasks
-    echo "Wiping your RAM(may take some time)"
-    sdmem -v
-    echo "Done! Your RAM is wiped succesfully"
-    echo "Shutting down your machine. Have a nice day!"
+	echo "Dropping your caches.."
+	echo 1024 > /proc/sys/vm/min_free_kbytes
+	echo 3  > /proc/sys/vm/drop_caches
+	echo 1  > /proc/sys/vm/oom_kill_allocating_task
+	echo 1  > /proc/sys/vm/overcommit_memory
+	echo 0  > /proc/sys/vm/oom_dump_tasks
+	echo "Wiping your RAM(may take some time)"
+	sdmem -v
+	echo "Done! Your RAM is wiped succesfully"
+	echo "Shutting down your machine. Have a nice day!"
 }
 
 wiperamfast() {
 	echo "Wiping your RAM fast, please wait"
 	echo "Try to not use your computer now"
 	sleep 5
-    echo "Dropping your caches.."
-    echo 1024 > /proc/sys/vm/min_free_kbytes
-    echo 3  > /proc/sys/vm/drop_caches
-    echo 1  > /proc/sys/vm/oom_kill_allocating_task
-    echo 1  > /proc/sys/vm/overcommit_memory
-    echo 0  > /proc/sys/vm/oom_dump_tasks
-    echo "Wiping your RAM(may take some time)"
-    sdmem -fllv
+	echo "Dropping your caches.."
+	echo 1024 > /proc/sys/vm/min_free_kbytes
+	echo 3  > /proc/sys/vm/drop_caches
+	echo 1  > /proc/sys/vm/oom_kill_allocating_task
+	echo 1  > /proc/sys/vm/overcommit_memory
+	echo 0  > /proc/sys/vm/oom_dump_tasks
+	echo "Wiping your RAM(may take some time)"
+	sdmem -fllv
 }
 
 torbridges() {
@@ -598,7 +611,7 @@ remrsyslog() {
 		case $removeornot in
 			"YES REMOVE RSYSLOG")
 				echo "Removing rsyslog, please wait"
-				sudo apt-get remove rsyslog -y > /dev/null 2>&1
+				apt-get remove rsyslog -y > /dev/null 2>&1
 					which rsyslogd > /dev/null 2>&1
 					if [ "$?" -eq "1" ]; then
 						echo "Done. rsyslog has been removed succesfully"
