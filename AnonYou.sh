@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #=======================================
 #Colors
 #=======================================
@@ -16,9 +15,9 @@ echo -e "${red} █████╗ ███╗  ██╗ █████╗ �
 ██╔══██║██║╚████║██║  ██║██║╚████║  ╚██╔╝  ██║  ██║██║   ██║
 ██║  ██║██║ ╚███║╚█████╔╝██║ ╚███║   ██║   ╚█████╔╝╚██████╔╝
 ╚═╝  ╚═╝╚═╝  ╚══╝ ╚════╝ ╚═╝  ╚══╝   ╚═╝    ╚════╝  ╚═════╝ ${end}"
-echo ""
+echo -e "==================|${slimred}v3_c0d3d_by_Gr3y_H47_${end}|=================="
 }
-
+#=======================================
 checkroot() {
 	if (( "$EUID" != 0 ));then
 		clear
@@ -28,17 +27,19 @@ checkroot() {
 		exit 1
 	else
 		clear
+		check4update
 		installreq
 		torcheck
 		privoxycheck
 		mac_c_check
 		sdmemcheck
+		exifcheck
 		echo "Press [ENTER] to go to main menu!"
 		read aoshofhaiosfhsi
 		main
 	fi
 }
-
+#=======================================
 installreq() {
 	echo "Can I install depencies?(y/n)"
 	read -p $'\e[1;31m>>>\e[0m ' caninstall
@@ -55,7 +56,7 @@ installreq() {
 		;;
 	esac
 }
-
+#########################
 torcheck() {
 	which tor > /dev/null 2>&1
 	if [ "$?" -eq "0" ]; then
@@ -80,7 +81,32 @@ torcheck() {
 		torinstalled=0
 	fi
 }
-
+#########################
+exifcheck() {
+	which exiftool > /dev/null 2>&1
+	if [ "$?" -eq "0" ]; then
+		echo -e "${end}exiftool......................[ ${greenf}Found${end} ]"
+		exiftoolinstalled=1
+	elif [ "$?" -ne "0" ];then
+		echo -e "exiftool...........................[ ${orange}Not found${end} ]"
+		if [ $dinstall -eq "1" ];then
+			echo -e "Installing exiftool...."
+			apt-get install exiftool -y > /dev/null 2>&1
+			which exiftool > /dev/null 2>&1
+			if [ "$?" -eq "0" ];then
+				echo -e "${greenf}Succesfully installed exiftool${end}"
+				exiftoolinstalled=1
+			else
+				echo -e "${orange}Something went wrong while exiftool installation...Please, restart the program and try again!${end}"
+				exiftoolinstalled=0
+			fi
+		fi
+	else
+		echo -e "exiftool......................[ ${red}Not found${end} ]"
+		exiftoolinstalled=0
+	fi
+}
+#########################
 sdmemcheck() {
 	which sdmem > /dev/null 2>&1
 	if [ "$?" -eq "0" ]; then
@@ -105,7 +131,7 @@ sdmemcheck() {
 		sdmeminstalled=0
 	fi
 }
-
+#########################
 mac_c_check() {
 	which macchanger > /dev/null 2>&1
 	if [ "$?" -eq "0" ]; then
@@ -130,7 +156,7 @@ mac_c_check() {
 		macchangerinstalled=0
 	fi
 }
-
+#########################
 privoxycheck() {
 	which privoxy > /dev/null 2>&1
 	if [ "$?" -eq "0" ]; then
@@ -155,7 +181,38 @@ privoxycheck() {
 		privoxyinstalled=0
 	fi
 }
+#########################
+check4update() {
+echo "Checking for updates!"
+curl 'https://notabug.org/Grey_Hat_Cybersecurity/AnonYou' | grep "Version 3" > /dev/null 2>&1
+if [ "$?" -eq "0" ];then
+	echo "You have actual version of AnonYou!"
+	echo "Press [ENTER] to go forward"
+	read jhslkashf
 
+else
+	echo "New version of AnonYou is available!"
+	echo "Do you want to update?(y/n)"
+	read -p $'\e[1;31m>>>\e[0m ' updorno
+	case $updorno in
+		y)
+		echo "Getting update, please wait.."
+		git clone https://notabug.org/Grey_Hat_Cybersecurity/AnonYou.git AnonYou_v3 > /dev/null 
+		echo "Done! You can find new version of AnonYou in your working folder!"
+		echo "You can start use a new version now!"
+		echo "Exiting..."
+		exit 0
+		;;
+		n)
+		;;
+		*)
+		echo "Error input, skipping.."
+		sleep 1
+		;;
+	esac
+fi
+}
+#########################
 main() {
 	clear
 	banner
@@ -172,14 +229,28 @@ main() {
 	sleep 0.01
 	echo "[6] File shredder"
 	sleep 0.01
-	echo "[7] User Guide"
+	echo "[7] Remove EXIF data from image"
 	sleep 0.01
-	echo "[8] Exit"
+	echo "[8] Panic button"
+	sleep 0.01
+	echo "[9] User Guide"
+	sleep 0.01
+	echo "[10] Exit"
 	read -p $'\e[1;31m>>>\e[0m ' main_choise
 	case $main_choise in
 		1)
 		if [ $macchangerinstalled -eq "1" ];then
-			spoofer
+			which ifconfig > /dev/null 2>&1
+			if [ "$?" -eq "0" ];then
+				spoofer
+			else
+				echo "Seems you haven't ifconfig"
+				echo "Changing MAC address specified by shutting down your interfaces and enabling them up back after spoofing"
+				echo "Please, make sure your system have 'ifconfig'.."
+				echo "Press [ENTER] to return to main menu!"
+				read ashfioashofhoasf
+				main
+			fi
 		else
 			echo "Seems like you haven't macchanger.."
 			echo "Please, install macchanger and try again!"
@@ -228,10 +299,24 @@ main() {
 		shreder
 		;;
 		7)
+		if [ $exiftoolinstalled -eq "1" ];then
+			exift
+		else
+			echo "Seems like you haven't exiftool.."
+			echo "Please, install exiftool and try again!"
+			echo "Press [ENTER] to return to main menu!"
+			read oiashfasiofjo
+			main
+		fi
+		;;
+		8)
+		panicbutton
+		;;
+		9)
 		userguide
 		;;
-        8)
-        exit
+		10)
+		exit 0
         ;;
 		*)
 		echo "Error input, repeating.."
@@ -240,7 +325,53 @@ main() {
 		;;
 	esac
 }
-
+#########################
+panicbutton() {
+	source things.txt #Loads your own instructions
+}
+#########################
+exift() {
+	clear
+	banner
+	echo "Please, enter the path to your image"
+	read -p $'\e[1;31m>>>\e[0m ' img2clean
+	if [[ -f $img2clean ]];then
+		case $img2clean in
+			"")
+			echo "Please, specify your image to clean metadata!"
+			sleep 1
+			exift
+			;;
+			*) 
+			echo "Removing EXIF data from your $img2clean .. Please wait.."
+			exiftool -all= $img2clean > /dev/null 2>&1
+			echo "Done! Press [ENTER] to return to main menu!"
+			read iashofoasf
+			main
+			;;
+		esac
+	else
+		echo "Looks like you've selected a file that not exists"
+		echo "Enter your filename carefully"
+		echo "If you use Drag'n'Drop - check for a space at the end of filename"
+		echo "Press [ENTER] to repeat, type 'menu' to return to main menu"
+		read -p $'\e[1;31m>>>\e[0m ' exifnofile
+		case $exifnofile in
+			"")
+			exift
+			;;
+			menu)
+			main
+			;;
+			*)
+			echo "Error input, returning to main menu"
+			sleep 1
+			main
+			;;
+		esac
+	fi		
+}
+#########################
 spoofer() {
 	clear
 	banner
@@ -313,7 +444,7 @@ spoofer() {
 		;;
 	esac
 }
-
+#########################
 swapclean() {
 	clear
 	echo "How do you want to wipe the swap space?"
@@ -361,23 +492,37 @@ swapclean() {
 		;;
 	esac
 }
-
+#########################
 userguide() {
 	clear
 	banner
-	echo "------------------------------------------------------"
+	sleep 0.01
+	echo ""
+	sleep 0.01
 	echo "1. What is TOR?"
+	sleep 0.01
 	echo "2. What is MAC address and why I need to change it?"
+	sleep 0.01
 	echo "3. What is RSYSLOG?"
+	sleep 0.01
 	echo "4. What is RAM wiping?"
+	sleep 0.01
 	echo "5. What is swap space wiping?"
+	sleep 0.01
 	echo "6. What is shreder?"
-	echo "7. I have a problem/question/bug. How can I contact you?"
-	echo "8. Go back to menu"
+	sleep 0.01
+	echo "7. What is EXIF and why should I remove my EXIF data from image?"
+	sleep 0.01
+	echo "8. What is panic button?"
+	sleep 0.01
+	echo "9. I have a problem/question/bug. How can I contact you?"
+	sleep 0.01
+	echo "10. Go back to menu"
 	read -p $'\e[1;31m>>>\e[0m ' usg
 	case $usg in
 		1)
 		echo "TOR (The onion router) is a special network of hundreds of computers around the world to anonymize your traffic"
+		sleep 0.01
 		echo "This network works like this: there are only 3 nodes through which all your traffic before getting to the target server, at the same time imposing a layer of encryption on all traffic (except for the last node on the output), from this came the name 'onion network'"
 		echo ""
 		echo "More information about Tor you can read on the official site of the developers"
@@ -446,17 +591,40 @@ userguide() {
 		userguide
 		;;
 		7)
+		echo "EXIF - This is the kind of information that is stored in photos and images."
+		echo "Usually it is the time of creation, if it is a photo, the model of the device, the number of megapixels of the camera, the name of the device and sometimes even the geo-position."
+		echo "Even screenshots and processed images have metadata about the device, user, editor versions, and other personal information."
+		echo ""
+		echo "When you upload your photos to, say, social media, that metadata gets posted to the site and so it helps in shaping your digital portrait."
+		echo "If you don't want to contribute to the collection of your information by evil corporations - remove metadata from all photos wherever you submit them, whether to an evil corporation or even a trusted service."
+		echo ""
+		echo "Press [ENTER] to return back!"
+		read oahsfkasfjp
+		userguide
+		;;
+		8)
+		echo "A panic button is a button that you program manually."
+		echo "This button allows you to set your special actions that will take place exactly when this button is pressed."
+		echo "You can, for example, program it to turn off the device, delete sensitive information, send a help message, and the like."
+		echo "To program this button, just go to 'things.txt' and type your bash commands there."
+		echo "After that, when you press the button, your commands will be executed."
+		echo ""
+		echo "Press [ENTER] to return back!"
+		read oahsfkasfjp
+		userguide
+		;;
+		9)
 		echo "If you have any question about our software/you faced a bug or problem"
 		echo "Please, feel free to contact us at: "
 		echo "E-Mail : greyhatfeedback@protonmail.com"
 		echo "Telegram : @greyhatfdbot"
 		echo "We will be happy to help you solve your problem!"
 		echo ""
-		echo "Press [ENTER] to return to main menu!"
+		echo "Press [ENTER] to return back!"
 		read asdiohasoidhas
-		main
+		userguide
 		;;
-		8)
+		10)
 		main
 		;;
 		*)
@@ -466,7 +634,7 @@ userguide() {
 		;;
 	esac
 }
-
+#########################
 shreder() {
 	clear
 	banner
@@ -500,7 +668,7 @@ shreder() {
 		;;
 	esac
 }
-
+#########################
 wipemem() {
 	clear
 	banner
@@ -528,37 +696,41 @@ wipemem() {
 		;;
 	esac
 }
-
+#########################
 wiperamsec() {
 	echo "Wiping your RAM hard, please wait"
 	echo "Try to not use your computer now"
 	sleep 5
-	echo "Dropping your caches.."
-	echo 1024 > /proc/sys/vm/min_free_kbytes
-	echo 3  > /proc/sys/vm/drop_caches
-	echo 1  > /proc/sys/vm/oom_kill_allocating_task
-	echo 1  > /proc/sys/vm/overcommit_memory
-	echo 0  > /proc/sys/vm/oom_dump_tasks
-	echo "Wiping your RAM(may take some time)"
-	sdmem -v
-	echo "Done! Your RAM is wiped succesfully"
-	echo "Shutting down your machine. Have a nice day!"
+    echo "Dropping your caches.."
+    echo 1024 > /proc/sys/vm/min_free_kbytes
+    echo 3  > /proc/sys/vm/drop_caches
+    echo 1  > /proc/sys/vm/oom_kill_allocating_task
+    echo 1  > /proc/sys/vm/overcommit_memory
+    echo 0  > /proc/sys/vm/oom_dump_tasks
+    echo "Wiping your RAM(may take some time)"
+    sdmem -v
+    echo "Done! Your RAM is wiped succesfully"
+    echo "Shutting down your machine. Have a nice day!"
 }
-
+#########################
 wiperamfast() {
 	echo "Wiping your RAM fast, please wait"
 	echo "Try to not use your computer now"
-	sleep 5
-	echo "Dropping your caches.."
-	echo 1024 > /proc/sys/vm/min_free_kbytes
-	echo 3  > /proc/sys/vm/drop_caches
-	echo 1  > /proc/sys/vm/oom_kill_allocating_task
-	echo 1  > /proc/sys/vm/overcommit_memory
-	echo 0  > /proc/sys/vm/oom_dump_tasks
-	echo "Wiping your RAM(may take some time)"
-	sdmem -fllv
+	echo "And please, close any process that can use RAM"
+	sleep 7
+    echo "Dropping your caches.."
+    echo 1024 > /proc/sys/vm/min_free_kbytes
+    echo "1024 kbytes written..."
+    echo 3  > /proc/sys/vm/drop_caches
+    echo 1  > /proc/sys/vm/oom_kill_allocating_task
+    echo "Allocating task killed.."
+    echo 1  > /proc/sys/vm/overcommit_memory
+    echo 0  > /proc/sys/vm/oom_dump_tasks
+    echo "Wiping your RAM(may take some time)"
+    sleep 2
+    sdmem -fllv
 }
-
+#########################
 torbridges() {
 	clear
 	banner
@@ -600,7 +772,7 @@ torbridges() {
 		main
 	fi
 }
-
+#########################
 remrsyslog() {
 	which rsyslogd > /dev/null 2>&1
 	if [ "$?" -eq "0" ]; then
@@ -643,7 +815,26 @@ remrsyslog() {
 	fi
 
 }
-
-
-checkroot
+#########################
+case $1 in
+	"")
+	checkroot
+	;;
+	-f)
+	if (( "$EUID" == 0 ));then
+		torcheck > /dev/null
+		exifcheck > /dev/null
+		sdmemcheck > /dev/null
+		mac_c_check > /dev/null
+		privoxycheck > /dev/null
+		main
+	else
+		clear
+		echo -e "${slimred}Sorry, I need root to do things.."
+		echo -e "All actions provided by the program require root access."
+		echo -e "Please use the sudo command or contact your system administrator.${end}"
+		exit 1
+	fi
+	;;
+esac
 
