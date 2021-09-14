@@ -1,0 +1,5 @@
+echo "This is your custom button"
+echo "You can add your own functions which will be executed simply by pressing that button"
+echo "Just open 'things.txt' and write your own commands to execute"
+echo "For example, shutdowning your device, shredding all files from directory, blocking your device etc"
+echo "Experiment a lot :)" 

@@ -1,0 +1,15 @@
+What's new in AnonYou v2
+------------------------
+1. Fixed a bug that prevented the program from closing from the menu
+2. A new tool has been added - deleting metadata from a photo. You can read the instructions right inside the program 
+3. Added forced startup. Now you can not watch a tedious picture with the dependency check constantly in the beginning, but just add the key -f when you run the script!
+4. Added a check for updates at startup.
+Now you can keep up with program updates without having to check the repository :)
+
+
+What's new in AnonYou v3(final version)
+------------------------
+1. Fixed some bugs that caused service errors
+2. A custom button has been added.
+In the file 'things.txt' you can write your own actions that this button will perform. You can read more about this in the User Guide section of the script.
+3. Added installer. Now you can install the program, its copy will be placed in the /bin folder of your system. After that, you can run it from any directory
